@@ -5,35 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Happy Valentine :)</title>
-    <link
-      rel="stylesheet"
-    />
-    <link rel="shortcut icon" type="image/png" href="./img/heart.svg" />
     <link rel="stylesheet" href="style/style.css" />
+    <link rel="shortcut icon" type="image/png" href="./img/heart.svg" />
     <script src="https://cdn.jsdelivr.net/npm/howler"></script>
-
   </head>
 
   <body>
-    <!-- Add audio element -->
-    <script>
-      var sound = new Howl({
-        src: ['audio/hua.mp3'],
-        autoplay: true,
-        loop: true,
-        volume: 1.0,
-        onplay: function() {
-          console.log("Audio is playing...");
-        },
-        onloaderror: function(id, error) {
-          console.error("Howler.js error:", error);
-        }
-      });
-    </script>
-    
-    
-    <div class="container">
-      <!-- Your existing content -->
+    <div class="start-button-container">
+      <button id="startAudioButton">Click to start audio</button>
+    </div>
+
+    <div class="container" style="display: none;">
+      <!-- Your existing content here -->
       <div class="one">
         <h1 class="one">
           Hey
@@ -86,7 +69,6 @@
         <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
           <circle cx="20" cy="20" r="20" />
         </svg>
-        <!-- Other SVG elements -->
       </div>
       <div class="nine">
         <p>ขอบคุณสำหรับทุกสิ่งขอให้มีสุขภาพแข็งแรงมีความสุขตลอดไป.</p>
@@ -95,9 +77,32 @@
       </div>
     </div>
 
-  </body>
+    <script>
+      document.getElementById('startAudioButton').addEventListener('click', function () {
+        // Hide the start button
+        document.querySelector('.start-button-container').style.display = 'none';
 
-  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
-  <script type="text/babel" src="script/main.js"></script>
+        // Start playing the audio
+        var sound = new Howl({
+          src: ['audio/hua.mp3'],
+          autoplay: true,
+          loop: true,
+          volume: 1.0,
+          onplay: function () {
+            console.log("Audio is playing...");
+          },
+          onloaderror: function (id, error) {
+            console.error("Howler.js error:", error);
+          }
+        });
+
+        // Show the content after the audio starts
+        document.querySelector('.container').style.display = 'block';
+      });
+    </script>
+
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+    <script type="text/babel" src="script/main.js"></script>
+  </body>
 </html>
