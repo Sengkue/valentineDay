@@ -298,9 +298,7 @@ body {
     font-weight: lighter;
   }
 }
-
-
-/* Style for the audio control button */
+/* Style for the audio control buttons */
 .audio-control {
   position: fixed;
   top: 20px;
@@ -311,20 +309,26 @@ body {
   gap: 10px;
 }
 
-#audioButton {
-  background-color: #4caf50; /* Green for play state */
+#audioButton, #restartButton {
+  background-color: #4caf50; /* Green for play/restart state */
   border: none;
   border-radius: 50%;
   cursor: pointer;
   padding: 0;
   outline: none;
   transition: background-color 0.3s ease;
+  width: 30px; /* Smaller button size */
+  height: 30px; /* Smaller button size */
 }
 
-#audioButton svg {
-  width: 40px;
-  height: 40px;
+#audioButton svg, #restartButton svg {
+  width: 16px; /* Smaller icon size */
+  height: 16px; /* Smaller icon size */
   fill: white;
+}
+
+#restartButton {
+  background-color: #03a9f4; /* Blue for restart button */
 }
 
 #volumeSlider {

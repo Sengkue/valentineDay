@@ -9,14 +9,24 @@
   <link rel="stylesheet" href="style/style.css" />
 </head>
 <body>
-  <!-- Audio Control Button -->
+  <!-- Audio Control Buttons -->
   <div class="audio-control">
+    <!-- Play/Pause Button -->
     <button id="audioButton" title="Toggle Audio" aria-label="Toggle Audio">
-      <svg id="audioIcon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+      <svg id="audioIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
         <!-- Default Play Icon -->
         <path d="M8 5v14l11-7z" />
       </svg>
     </button>
+
+    <!-- Restart Button -->
+    <button id="restartButton" title="Restart Audio" aria-label="Restart Audio">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" />
+      </svg>
+    </button>
+
+    <!-- Volume Slider -->
     <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1" title="Volume" />
   </div>
 
@@ -46,22 +56,42 @@
       <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
     `;
 
+    // Variables to track playback state
+    let isPlaying = true; // Track if audio is playing
+    let lastPosition = 0; // Store the last playback position
+
     // Select elements
     const audioButton = document.getElementById('audioButton');
+    const restartButton = document.getElementById('restartButton');
     const audioIcon = document.getElementById('audioIcon');
     const volumeSlider = document.getElementById('volumeSlider');
 
     // Toggle play/pause functionality
     audioButton.addEventListener('click', () => {
-      if (sound.playing()) {
-        sound.pause(); // Pause the audio
+      if (isPlaying) {
+        // Pause the audio
+        lastPosition = sound.seek(); // Save the current playback position
+        sound.pause();
         audioIcon.innerHTML = playIcon; // Change to play icon
         audioButton.style.backgroundColor = '#ff4d4d'; // Visual feedback
+        isPlaying = false;
       } else {
-        sound.play(); // Play the audio
+        // Resume the audio from the last position
+        sound.seek(lastPosition); // Set the playback position
+        sound.play();
         audioIcon.innerHTML = pauseIcon; // Change to pause icon
         audioButton.style.backgroundColor = '#4caf50'; // Visual feedback
+        isPlaying = true;
       }
+    });
+
+    // Restart functionality
+    restartButton.addEventListener('click', () => {
+      sound.seek(0); // Reset playback position to the beginning
+      sound.play(); // Start playing from the beginning
+      audioIcon.innerHTML = pauseIcon; // Change to pause icon
+      audioButton.style.backgroundColor = '#4caf50'; // Visual feedback
+      isPlaying = true; // Update playback state
     });
 
     // Volume control
