@@ -1,102 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Happy Valentine :)</title>
-    <link
-      rel="stylesheet"
-    />
-    <link rel="shortcut icon" type="image/png" href="./img/heart.svg" />
-    <link rel="stylesheet" href="style/style.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Happy Valentine :)</title>
+  <link rel="shortcut icon" type="image/png" href="./img/heart.svg" />
+  <link rel="stylesheet" href="style/style.css" />
+</head>
+<body>
+  <!-- Audio Control Button -->
+  <div class="audio-control">
+    <button id="audioButton" title="Toggle Audio" aria-label="Toggle Audio">
+      <svg id="audioIcon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+        <!-- Default Play Icon -->
+        <path d="M8 5v14l11-7z" />
+      </svg>
+    </button>
+    <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1" title="Volume" />
+  </div>
 
-  <body>
-    <!-- Add audio element -->
-<script src="https://cdn.jsdelivr.net/npm/howler"></script>
-<script>
-  var sound = new Howl({
-    src: ['audio/hua.mp3'],
-    autoplay: true,
-    loop: true,
-    volume: 1.0,
-    onplay: function() {
-      console.log("Audio is playing...");
-    },
-    onloaderror: function(id, error) {
-      console.error("Howler.js error:", error);
-    }
-  });
-</script>
+  <!-- Add audio element -->
+  <script src="https://cdn.jsdelivr.net/npm/howler"></script>
+  <script>
+    // Initialize Howler.js audio
+    var sound = new Howl({
+      src: ['audio/hua.mp3'],
+      autoplay: true,
+      loop: true,
+      volume: 1.0,
+      onplay: function () {
+        console.log("Audio is playing...");
+      },
+      onloaderror: function (id, error) {
+        console.error("Howler.js error:", error);
+        alert("Failed to load audio. Please check the file path.");
+      }
+    });
 
-    
-    <div class="container">
-      <!-- Your existing content -->
-      <div class="one">
-        <h1 class="one">
-          Hey
-          <span id="name">Hua</span>
-        </h1>
-        <p class="two" id="greetingText">ฉันชอบชื่อของคุณมาก เมื่อฉันได้ยินมัน รู้สึกเหมือนมีลมหนาวพัดมา😅</p>
-      </div>
-      <div class="three">
-        <p>It's Valentine!!! :D</p>
-      </div>
-      <div class="four">
-        <div class="text-box">
-          <p class="hbd-chatbox">
-            🙏ขอบคุณมากที่ทำให้ปีนี้สดใสกว่าปีที่แล้ว
-          </p>
-          <p class="fake-btn">Send</p>
-        </div>
-      </div>
-      <div class="five">
-        <p class="idea-1">ฉันอยากทำอะไรมากกว่านี้.</p>
-        <p class="idea-2">แต่แล้วฉันก็หยุด</p>
-        <p class="idea-3">
-          ฉันรู้ตัวว่าอยากทำอะไรสักอย่างพิเศษแต่ไม่มีสถานะที่จะทำ <strong>อย่างนั้น</strong>.
-        </p>
-        <p class="idea-4">แต่ว่า,</p>
-        <p class="idea-5">
-          คุณยังคงพิเศษสำหรับฉัน
-          <span>:)</span>
-        </p>
-        <p class="idea-6">
-          <span>S</span>
-          <span>O</span>
-        </p>
-      </div>
-      <div class="six">
-        <img src="img/vector.jpg" alt="" class="girl-dp" id="imagePath" />
-        <div class="wish">
-          <h3 class="wish-hbd">สุขสันต์วันวาเลนไทน์นะคนพิเศษ</h3>
-          <h5 id="wishText">😊😊</h5>
-        </div>
-      </div>
-      <div class="seven">
-        <div class="baloons">
-          <img src="img/balloon.svg" alt="" />
-          <img src="img/smiling.svg" />
-          <img src="img/heart.svg" />
-        </div>
-      </div>
-      <div class="eight">
-        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="20" cy="20" r="20" />
-        </svg>
-        <!-- Other SVG elements -->
-      </div>
-      <div class="nine">
-        <p>ขอบคุณสำหรับทุกสิ่งขอให้มีสุขภาพแข็งแรงมีความสุขตลอดไป.</p>
-        <p id="replay">by skv</p>
-        <p class="last-smile">:)</p>
+    // Define SVG paths for play and pause icons
+    const playIcon = `
+      <path d="M8 5v14l11-7z" />
+    `;
+    const pauseIcon = `
+      <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+    `;
+
+    // Select elements
+    const audioButton = document.getElementById('audioButton');
+    const audioIcon = document.getElementById('audioIcon');
+    const volumeSlider = document.getElementById('volumeSlider');
+
+    // Toggle play/pause functionality
+    audioButton.addEventListener('click', () => {
+      if (sound.playing()) {
+        sound.pause(); // Pause the audio
+        audioIcon.innerHTML = playIcon; // Change to play icon
+        audioButton.style.backgroundColor = '#ff4d4d'; // Visual feedback
+      } else {
+        sound.play(); // Play the audio
+        audioIcon.innerHTML = pauseIcon; // Change to pause icon
+        audioButton.style.backgroundColor = '#4caf50'; // Visual feedback
+      }
+    });
+
+    // Volume control
+    volumeSlider.addEventListener('input', () => {
+      const volume = parseFloat(volumeSlider.value);
+      sound.volume(volume); // Update volume dynamically
+    });
+  </script>
+
+  <div class="container">
+    <!-- Your existing content -->
+    <div class="one">
+      <h1 class="one">Hey <span id="name">Hua</span></h1>
+      <p class="two" id="greetingText">ฉันชอบชื่อของคุณมาก เมื่อฉันได้ยินมัน รู้สึกเหมือนมีลมหนาวพัดมา😅</p>
+    </div>
+    <div class="three">
+      <p>It's Valentine!!! :D</p>
+    </div>
+    <div class="four">
+      <div class="text-box">
+        <p class="hbd-chatbox">🙏ขอบคุณมากที่ทำให้ปีนี้สดใสกว่าปีที่แล้ว</p>
+        <p class="fake-btn">Send</p>
       </div>
     </div>
-
-  </body>
+    <div class="five">
+      <p class="idea-1">ฉันอยากทำอะไรมากกว่านี้.</p>
+      <p class="idea-2">แต่แล้วฉันก็หยุด</p>
+      <p class="idea-3">
+        ฉันรู้ตัวว่าอยากทำอะไรสักอย่างพิเศษแต่ไม่มีสถานะที่จะทำ <strong>อย่างนั้น</strong>.
+      </p>
+      <p class="idea-4">แต่ว่า,</p>
+      <p class="idea-5">
+        คุณยังคงพิเศษสำหรับฉัน <span>:)</span>
+      </p>
+      <p class="idea-6">
+        <span>S</span><span>O</span>
+      </p>
+    </div>
+    <div class="six">
+      <img src="img/vector.jpg" alt="" class="girl-dp" id="imagePath" />
+      <div class="wish">
+        <h3 class="wish-hbd">สุขสันต์วันวาเลนไทน์นะคนพิเศษ</h3>
+        <h5 id="wishText">😊😊</h5>
+      </div>
+    </div>
+    <div class="seven">
+      <div class="baloons">
+        <img src="img/balloon.svg" alt="" />
+        <img src="img/smiling.svg" />
+        <img src="img/heart.svg" />
+      </div>
+    </div>
+    <div class="eight">
+      <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="20" />
+      </svg>
+    </div>
+    <div class="nine">
+      <p>ขอบคุณสำหรับทุกสิ่งขอให้มีสุขภาพแข็งแรงมีความสุขตลอดไป.</p>
+      <p id="replay">by skv</p>
+      <p class="last-smile">:)</p>
+    </div>
+  </div>
 
   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
   <script type="text/babel" src="script/main.js"></script>
+</body>
 </html>

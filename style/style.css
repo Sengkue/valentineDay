@@ -298,3 +298,35 @@ body {
     font-weight: lighter;
   }
 }
+
+
+/* Style for the audio control button */
+.audio-control {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#audioButton {
+  background-color: #4caf50; /* Green for play state */
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+#audioButton svg {
+  width: 40px;
+  height: 40px;
+  fill: white;
+}
+
+#volumeSlider {
+  width: 100px;
+}
