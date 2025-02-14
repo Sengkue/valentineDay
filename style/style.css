@@ -319,6 +319,9 @@ body {
   transition: background-color 0.3s ease;
   width: 30px; /* Smaller button size */
   height: 30px; /* Smaller button size */
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
 }
 
 #audioButton svg, #restartButton svg {

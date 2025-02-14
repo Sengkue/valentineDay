@@ -36,9 +36,10 @@
     // Initialize Howler.js audio
     var sound = new Howl({
       src: ['audio/hua.mp3'],
-      autoplay: true,
+      autoplay: true, // Enable auto-play
       loop: true,
       volume: 1.0,
+      html5: true, // Use HTML5 audio for better compatibility
       onplay: function () {
         console.log("Audio is playing...");
       },
@@ -98,6 +99,16 @@
     volumeSlider.addEventListener('input', () => {
       const volume = parseFloat(volumeSlider.value);
       sound.volume(volume); // Update volume dynamically
+    });
+
+    // Handle browser auto-play restrictions
+    document.addEventListener('DOMContentLoaded', () => {
+      // Attempt to play audio automatically
+      sound.play().catch((error) => {
+        console.warn("Auto-play was blocked by the browser. User interaction is required.");
+        // Provide a fallback message or button for the user to start playback
+        alert("Please click the play button to start the audio.");
+      });
     });
   </script>
 
