@@ -14,14 +14,22 @@
 
   <body>
     <!-- Add audio element -->
-    <button id="playAudio">Play Music</button>
+<script src="https://cdn.jsdelivr.net/npm/howler"></script>
+<script>
+  var sound = new Howl({
+    src: ['audio/hua.mp3'],
+    autoplay: true,
+    loop: true,
+    volume: 1.0,
+    onplay: function() {
+      console.log("Audio is playing...");
+    },
+    onloaderror: function(id, error) {
+      console.error("Howler.js error:", error);
+    }
+  });
+</script>
 
-    <script>
-      document.getElementById('playAudio').addEventListener('click', function() {
-        var audio = document.getElementById('backgroundMusic');
-        audio.play();
-      });
-    </script>
     
     <div class="container">
       <!-- Your existing content -->
